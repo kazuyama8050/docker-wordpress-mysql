@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2020 ServMask Inc.
+ * Copyright (C) 2014-2019 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -76,9 +76,7 @@ class Ai1wm_Database_Utility {
 					$tmp   = $data;
 					$props = get_object_vars( $data );
 					foreach ( $props as $key => $value ) {
-						if ( ! empty( $tmp->$key ) ) {
-							$tmp->$key = self::replace_serialized_values( $from, $to, $value, false );
-						}
+						$tmp->$key = self::replace_serialized_values( $from, $to, $value, false );
 					}
 
 					$data = $tmp;
