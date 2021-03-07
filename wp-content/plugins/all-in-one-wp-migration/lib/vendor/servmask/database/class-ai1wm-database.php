@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright (C) 2014-2019 ServMask Inc.
+ * Copyright (C) 2014-2020 ServMask Inc.
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -35,6 +35,27 @@ abstract class Ai1wm_Database {
 	 * @var object
 	 */
 	protected $wpdb = null;
+
+	/**
+	 * WordPress database base tables
+	 *
+	 * @var array
+	 */
+	protected $base_tables = null;
+
+	/**
+	 * WordPress database views
+	 *
+	 * @var array
+	 */
+	protected $views = null;
+
+	/**
+	 * WordPress database tables
+	 *
+	 * @var array
+	 */
+	protected $tables = null;
 
 	/**
 	 * Old table prefixes
@@ -79,11 +100,25 @@ abstract class Ai1wm_Database {
 	protected $new_replace_values = array();
 
 	/**
-	 * Table where clauses
+	 * Old raw replace values
 	 *
 	 * @var array
 	 */
-	protected $table_where_clauses = array();
+	protected $old_replace_raw_values = array();
+
+	/**
+	 * New raw replace values
+	 *
+	 * @var array
+	 */
+	protected $new_replace_raw_values = array();
+
+	/**
+	 * Table where query
+	 *
+	 * @var array
+	 */
+	protected $table_where_query = array();
 
 	/**
 	 * Table prefix columns
@@ -93,18 +128,11 @@ abstract class Ai1wm_Database {
 	protected $table_prefix_columns = array();
 
 	/**
-	 * Include table prefixes
+	 * Table prefix filters
 	 *
 	 * @var array
 	 */
-	protected $include_table_prefixes = array();
-
-	/**
-	 * Exclude table prefixes
-	 *
-	 * @var array
-	 */
-	protected $exclude_table_prefixes = array();
+	protected $table_prefix_filters = array();
 
 	/**
 	 * List all tables that should not be affected by the timeout of the current request
@@ -121,6 +149,13 @@ abstract class Ai1wm_Database {
 	protected $visual_composer = false;
 
 	/**
+	 * Oxygen Builder
+	 *
+	 * @var boolean
+	 */
+	protected $oxygen_builder = false;
+
+	/**
 	 * BeTheme Responsive
 	 *
 	 * @var boolean
@@ -135,6 +170,13 @@ abstract class Ai1wm_Database {
 	protected $optimize_press = false;
 
 	/**
+	 * Avada Fusion Builder
+	 *
+	 * @var boolean
+	 */
+	protected $avada_fusion_builder = false;
+
+	/**
 	 * Constructor
 	 *
 	 * @param object $wpdb WPDB instance
@@ -146,9 +188,13 @@ abstract class Ai1wm_Database {
 		if ( is_resource( $this->wpdb->dbh ) ) {
 			if ( get_resource_type( $this->wpdb->dbh ) === 'SQL Server Connection' ) {
 				throw new Ai1wm_Database_Exception(
-					'Your WordPress installation uses Microsoft SQL Server. ' .
-					'In order to use All in One WP Migration, please change your installation to MySQL and try again. ' .
-					'<a href="https://help.servmask.com/knowledgebase/microsoft-sql-server/" target="_blank">Technical details</a>'
+					__(
+						'Your WordPress installation uses Microsoft SQL Server. ' .
+						'To use All-in-One WP Migration, please change your installation to MySQL and try again. ' .
+						'<a href="https://help.servmask.com/knowledgebase/microsoft-sql-server/" target="_blank">Technical details</a>',
+						AI1WM_PLUGIN_NAME
+					),
+					501
 				);
 			}
 		}
@@ -337,41 +383,39 @@ abstract class Ai1wm_Database {
 	}
 
 	/**
-	 * Set table where clauses
+	 * Set table where query
 	 *
-	 * @param  string $table_name    Table name
-	 * @param  array  $where_clauses Table clauses
+	 * @param  string $table_name   Table name
+	 * @param  array  $where_$query Table query
 	 * @return object
 	 */
-	public function set_table_where_clauses( $table_name, $where_clauses ) {
-		$this->table_where_clauses[ strtolower( $table_name ) ] = $where_clauses;
+	public function set_table_where_query( $table_name, $where_query ) {
+		$this->table_where_query[ strtolower( $table_name ) ] = $where_query;
 
 		return $this;
 	}
 
 	/**
-	 * Get table where clauses
+	 * Get table where query
 	 *
 	 * @param  string $table_name Table name
-	 * @return array
+	 * @return string
 	 */
-	public function get_table_where_clauses( $table_name ) {
-		if ( isset( $this->table_where_clauses[ strtolower( $table_name ) ] ) ) {
-			return $this->table_where_clauses[ strtolower( $table_name ) ];
+	public function get_table_where_query( $table_name ) {
+		if ( isset( $this->table_where_query[ strtolower( $table_name ) ] ) ) {
+			return $this->table_where_query[ strtolower( $table_name ) ];
 		}
-
-		return array();
 	}
 
 	/**
 	 * Set table prefix columns
 	 *
-	 * @param  string $table_name     Table name
-	 * @param  array  $prefix_columns Table columns
+	 * @param  string $table_name   Table name
+	 * @param  array  $column_names Column names
 	 * @return object
 	 */
-	public function set_table_prefix_columns( $table_name, $prefix_columns ) {
-		foreach ( $prefix_columns as $column_name ) {
+	public function set_table_prefix_columns( $table_name, $column_names ) {
+		foreach ( $column_names as $column_name ) {
 			$this->table_prefix_columns[ strtolower( $table_name ) ][ strtolower( $column_name ) ] = true;
 		}
 
@@ -388,50 +432,29 @@ abstract class Ai1wm_Database {
 		if ( isset( $this->table_prefix_columns[ strtolower( $table_name ) ] ) ) {
 			return $this->table_prefix_columns[ strtolower( $table_name ) ];
 		}
-
-		return array();
 	}
 
 	/**
-	 * Set include table prefixes
+	 * Add table prefix filter
 	 *
-	 * @param  array  $prefixes List of table prefixes
+	 * @param  string $table_prefix   Table prefix
+	 * @param  string $exclude_prefix Exclude prefix
 	 * @return object
 	 */
-	public function set_include_table_prefixes( $prefixes ) {
-		$this->include_table_prefixes = $prefixes;
+
+	public function add_table_prefix_filter( $table_prefix, $exclude_prefix = null ) {
+		$this->table_prefix_filters[] = array( $table_prefix, $exclude_prefix );
 
 		return $this;
 	}
 
 	/**
-	 * Get include table prefixes
+	 * Get table prefix filter
 	 *
 	 * @return array
 	 */
-	public function get_include_table_prefixes() {
-		return $this->include_table_prefixes;
-	}
-
-	/**
-	 * Set exclude table prefixes
-	 *
-	 * @param  array  $prefixes List of table prefixes
-	 * @return object
-	 */
-	public function set_exclude_table_prefixes( $prefixes ) {
-		$this->exclude_table_prefixes = $prefixes;
-
-		return $this;
-	}
-
-	/**
-	 * Get exclude table prefixes
-	 *
-	 * @return array
-	 */
-	public function get_exclude_table_prefixes() {
-		return $this->exclude_table_prefixes;
+	public function get_table_prefix_filters() {
+		return $this->table_prefix_filters;
 	}
 
 	/**
@@ -477,6 +500,27 @@ abstract class Ai1wm_Database {
 	}
 
 	/**
+	 * Set Oxygen Builder
+	 *
+	 * @param  boolean $active Is Oxygen Builder Active?
+	 * @return object
+	 */
+	public function set_oxygen_builder( $active ) {
+		$this->oxygen_builder = $active;
+
+		return $this;
+	}
+
+	/**
+	 * Get Oxygen Builder
+	 *
+	 * @return boolean
+	 */
+	public function get_oxygen_builder() {
+		return $this->oxygen_builder;
+	}
+
+	/**
 	 * Set BeTheme Responsive
 	 *
 	 * @param  boolean $active Is BeTheme Responsive Active?
@@ -519,81 +563,164 @@ abstract class Ai1wm_Database {
 	}
 
 	/**
+	 * Set Avada Fusion Builder
+	 *
+	 * @param  boolean $active Is Avada Fusion Builder Active?
+	 * @return object
+	 */
+	public function set_avada_fusion_builder( $active ) {
+		$this->avada_fusion_builder = $active;
+
+		return $this;
+	}
+
+	/**
+	 * Get Avada Fusion Builder
+	 *
+	 * @return boolean
+	 */
+	public function get_avada_fusion_builder() {
+		return $this->avada_fusion_builder;
+	}
+
+	/**
+	 * Get views
+	 *
+	 * @return array
+	 */
+	protected function get_views() {
+		if ( is_null( $this->views ) ) {
+			$where_query = array();
+
+			// Get lower case table names
+			$lower_case_table_names = $this->get_lower_case_table_names();
+
+			// Loop over table prefixes
+			if ( $this->get_table_prefix_filters() ) {
+				foreach ( $this->get_table_prefix_filters() as $prefix_filter ) {
+					if ( isset( $prefix_filter[0], $prefix_filter[1] ) ) {
+						if ( $lower_case_table_names ) {
+							$where_query[] = sprintf( "(`Tables_in_%s` REGEXP '^%s' AND `Tables_in_%s` NOT REGEXP '^%s')", $this->wpdb->dbname, $prefix_filter[0], $this->wpdb->dbname, $prefix_filter[1] );
+						} else {
+							$where_query[] = sprintf( "(CAST(`Tables_in_%s` AS BINARY) REGEXP BINARY '^%s' AND CAST(`Tables_in_%s` AS BINARY) NOT REGEXP BINARY '^%s')", $this->wpdb->dbname, $prefix_filter[0], $this->wpdb->dbname, $prefix_filter[1] );
+						}
+					} else {
+						if ( $lower_case_table_names ) {
+							$where_query[] = sprintf( "`Tables_in_%s` REGEXP '^%s'", $this->wpdb->dbname, $prefix_filter[0] );
+						} else {
+							$where_query[] = sprintf( "CAST(`Tables_in_%s` AS BINARY) REGEXP BINARY '^%s'", $this->wpdb->dbname, $prefix_filter[0] );
+						}
+					}
+				}
+			} else {
+				$where_query[] = 1;
+			}
+
+			$this->views = array();
+
+			// Loop over views
+			$result = $this->query( sprintf( "SHOW FULL TABLES FROM `%s` WHERE `Table_type` = 'VIEW' AND (%s)", $this->wpdb->dbname, implode( ' OR ', $where_query ) ) );
+			while ( $row = $this->fetch_row( $result ) ) {
+				if ( isset( $row[0] ) ) {
+					$this->views[] = $row[0];
+				}
+			}
+
+			// Close result cursor
+			$this->free_result( $result );
+		}
+
+		return $this->views;
+	}
+
+	/**
+	 * Get base tables
+	 *
+	 * @return array
+	 */
+	protected function get_base_tables() {
+		if ( is_null( $this->base_tables ) ) {
+			$where_query = array();
+
+			// Get lower case table names
+			$lower_case_table_names = $this->get_lower_case_table_names();
+
+			// Loop over table prefixes
+			if ( $this->get_table_prefix_filters() ) {
+				foreach ( $this->get_table_prefix_filters() as $prefix_filter ) {
+					if ( isset( $prefix_filter[0], $prefix_filter[1] ) ) {
+						if ( $lower_case_table_names ) {
+							$where_query[] = sprintf( "(`Tables_in_%s` REGEXP '^%s' AND `Tables_in_%s` NOT REGEXP '^%s')", $this->wpdb->dbname, $prefix_filter[0], $this->wpdb->dbname, $prefix_filter[1] );
+						} else {
+							$where_query[] = sprintf( "(CAST(`Tables_in_%s` AS BINARY) REGEXP BINARY '^%s' AND CAST(`Tables_in_%s` AS BINARY) NOT REGEXP BINARY '^%s')", $this->wpdb->dbname, $prefix_filter[0], $this->wpdb->dbname, $prefix_filter[1] );
+						}
+					} else {
+						if ( $lower_case_table_names ) {
+							$where_query[] = sprintf( "`Tables_in_%s` REGEXP '^%s'", $this->wpdb->dbname, $prefix_filter[0] );
+						} else {
+							$where_query[] = sprintf( "CAST(`Tables_in_%s` AS BINARY) REGEXP BINARY '^%s'", $this->wpdb->dbname, $prefix_filter[0] );
+						}
+					}
+				}
+			} else {
+				$where_query[] = 1;
+			}
+
+			$this->base_tables = array();
+
+			// Loop over base tables
+			$result = $this->query( sprintf( "SHOW FULL TABLES FROM `%s` WHERE `Table_type` = 'BASE TABLE' AND (%s)", $this->wpdb->dbname, implode( ' OR ', $where_query ) ) );
+			while ( $row = $this->fetch_row( $result ) ) {
+				if ( isset( $row[0] ) ) {
+					$this->base_tables[] = $row[0];
+				}
+			}
+
+			// Close result cursor
+			$this->free_result( $result );
+		}
+
+		return $this->base_tables;
+	}
+
+	/**
+	 * Set tables
+	 *
+	 * @param  array  $tables List of tables
+	 * @return object
+	 */
+	public function set_tables( $tables ) {
+		$this->tables = $tables;
+
+		return $this;
+	}
+
+	/**
 	 * Get tables
 	 *
 	 * @return array
 	 */
 	public function get_tables() {
-		$tables = array();
-
-		$result = $this->query( "SHOW TABLES FROM `{$this->wpdb->dbname}`" );
-		while ( $row = $this->fetch_row( $result ) ) {
-			if ( isset( $row[0] ) && ( $table_name = $row[0] ) ) {
-
-				// Include table prefixes
-				if ( $this->get_include_table_prefixes() ) {
-					$include = false;
-
-					// Check table prefixes
-					foreach ( $this->get_include_table_prefixes() as $prefix ) {
-						if ( stripos( $table_name, $prefix ) === 0 ) {
-							$include = true;
-							break;
-						}
-					}
-
-					// Skip current table
-					if ( $include === false ) {
-						continue;
-					}
-				}
-
-				// Exclude table prefixes
-				if ( $this->get_exclude_table_prefixes() ) {
-					$exclude = false;
-
-					// Check table prefixes
-					foreach ( $this->get_exclude_table_prefixes() as $prefix ) {
-						if ( stripos( $table_name, $prefix ) === 0 ) {
-							$exclude = true;
-							break;
-						}
-					}
-
-					// Skip current table
-					if ( $exclude === true ) {
-						continue;
-					}
-				}
-
-				// Add table name
-				$tables[] = $table_name;
-			}
+		if ( is_null( $this->tables ) ) {
+			return array_merge( $this->get_base_tables(), $this->get_views() );
 		}
 
-		// Close result cursor
-		$this->free_result( $result );
-
-		return $tables;
+		return $this->tables;
 	}
 
 	/**
 	 * Export database into a file
 	 *
 	 * @param  string  $file_name    File name
+	 * @param  integer $query_offset Query offset
 	 * @param  integer $table_index  Table index
 	 * @param  integer $table_offset Table offset
 	 * @param  integer $table_rows   Table rows
 	 * @return boolean
 	 */
-	public function export( $file_name, &$table_index = 0, &$table_offset = 0, &$table_rows = 0 ) {
+	public function export( $file_name, &$query_offset = 0, &$table_index = 0, &$table_offset = 0, &$table_rows = 0 ) {
 		// Set file handler
-		$file_handler = ai1wm_open( $file_name, 'ab' );
-
-		// Write headers
-		if ( $table_index === 0 ) {
-			ai1wm_write( $file_handler, $this->get_header() );
-		}
+		$file_handler = ai1wm_open( $file_name, 'cb' );
 
 		// Start time
 		$start = microtime( true );
@@ -601,158 +728,61 @@ abstract class Ai1wm_Database {
 		// Flag to hold if all tables have been processed
 		$completed = true;
 
-		// Set SQL Mode
+		// Set SQL mode
 		$this->query( "SET SESSION sql_mode = ''" );
 
 		// Get tables
 		$tables = $this->get_tables();
 
-		// Export tables
-		for ( ; $table_index < count( $tables ); ) {
+		// Get views
+		$views = $this->get_views();
 
-			// Get table name
-			$table_name = $tables[ $table_index ];
+		// Set file pointer at the query offset
+		if ( fseek( $file_handler, $query_offset ) !== -1 ) {
 
-			// Replace table name prefixes
-			$new_table_name = $this->replace_table_prefixes( $table_name, 0 );
-
-			// Get create table statement
-			if ( $table_offset === 0 ) {
-
-				// Write table drop statement
-				$drop_table = "\nDROP TABLE IF EXISTS `{$new_table_name}`;\n";
-
-				// Write table statement
-				ai1wm_write( $file_handler, $drop_table );
-
-				// Get create table statement
-				$create_table = $this->get_create_table( $table_name );
-
-				// Replace create table prefixes
-				$create_table = $this->replace_table_prefixes( $create_table, 14 );
-
-				// Replace table constraints
-				$create_table = $this->replace_table_constraints( $create_table );
-
-				// Replace create table options
-				$create_table = $this->replace_table_options( $create_table );
-
-				// Write table statement
-				ai1wm_write( $file_handler, $create_table );
-
-				// Write end of statement
-				ai1wm_write( $file_handler, ";\n\n" );
+			// Write headers
+			if ( $query_offset === 0 ) {
+				ai1wm_write( $file_handler, $this->get_header() );
 			}
 
-			// Get primary keys
-			$primary_keys = $this->get_primary_keys( $table_name );
+			// Export tables
+			for ( ; $table_index < count( $tables ); ) {
 
-			// Get table columns
-			$table_columns = $this->get_column_types( $table_name );
+				// Get table name
+				$table_name = $tables[ $table_index ];
 
-			// Get prefix columns
-			$prefix_columns = $this->get_table_prefix_columns( $table_name );
+				// Replace table name prefixes
+				$new_table_name = $this->replace_table_prefixes( $table_name, 0 );
 
-			do {
+				// Loop over tables and views
+				if ( in_array( $table_name, $views ) ) {
 
-				// Set query
-				if ( $primary_keys ) {
+					// Get create view statement
+					if ( $table_offset === 0 ) {
 
-					// Set table keys
-					$table_keys = array();
-					foreach ( $primary_keys as $key ) {
-						$table_keys[] = sprintf( '`%s`', $key );
-					}
+						// Write view drop statement
+						$drop_view = "\nDROP VIEW IF EXISTS `{$new_table_name}`;\n";
 
-					$table_keys = implode( ', ', $table_keys );
+						// Write drop view statement
+						ai1wm_write( $file_handler, $drop_view );
 
-					// Set table where clauses
-					$table_where = array( 1 );
-					foreach ( $this->get_table_where_clauses( $table_name ) as $clause ) {
-						$table_where[] = $clause;
-					}
+						// Get create view statement
+						$create_view = $this->get_create_view( $table_name );
 
-					$table_where = implode( ' AND ', $table_where );
+						// Replace create view name
+						$create_view = $this->replace_view_name( $create_view, $table_name, $new_table_name );
 
-					// Set query with offset and rows count
-					$query = sprintf( 'SELECT t1.* FROM `%s` AS t1 JOIN (SELECT %s FROM `%s` WHERE %s ORDER BY %s LIMIT %d, %d) AS t2 USING (%s)', $table_name, $table_keys, $table_name, $table_where, $table_keys, $table_offset, AI1WM_MAX_SELECT_RECORDS, $table_keys );
+						// Replace create view identifiers
+						$create_view = $this->replace_view_identifiers( $create_view );
 
-				} else {
+						// Replace create view options
+						$create_view = $this->replace_view_options( $create_view );
 
-					// Set table keys
-					$table_keys = 1;
+						// Write create view statement
+						ai1wm_write( $file_handler, $create_view );
 
-					// Set table where clauses
-					$table_where = array( 1 );
-					foreach ( $this->get_table_where_clauses( $table_name ) as $clause ) {
-						$table_where[] = $clause;
-					}
-
-					$table_where = implode( ' AND ', $table_where );
-
-					// Set query with offset and rows count
-					$query = sprintf( 'SELECT * FROM `%s` WHERE %s ORDER BY %s LIMIT %d, %d', $table_name, $table_where, $table_keys, $table_offset, AI1WM_MAX_SELECT_RECORDS );
-				}
-
-				// Run SQL query
-				$result = $this->query( $query );
-
-				// Repair table data
-				if ( $this->errno() === 1194 ) {
-
-					// Current table is marked as crashed and should be repaired
-					$this->repair_table( $table_name );
-
-					// Run SQL query
-					$result = $this->query( $query );
-				}
-
-				// Generate insert statements
-				if ( $num_rows = $this->num_rows( $result ) ) {
-
-					// Loop over table rows
-					while ( $row = $this->fetch_assoc( $result ) ) {
-
-						// Write start transaction
-						if ( $table_offset % AI1WM_MAX_TRANSACTION_QUERIES === 0 ) {
-							ai1wm_write( $file_handler, "START TRANSACTION;\n" );
-						}
-
-						$items = array();
-						foreach ( $row as $key => $value ) {
-							// Replace table prefix columns
-							if ( isset( $prefix_columns[ strtolower( $key ) ] ) ) {
-								$value = $this->replace_column_prefixes( $value, 0 );
-							}
-
-							$items[] = $this->prepare_table_values( $value, $table_columns[ strtolower( $key ) ] );
-						}
-
-						// Set table values
-						$table_values = implode( ',', $items );
-
-						// Set insert statement
-						$table_insert = "INSERT INTO `{$new_table_name}` VALUES ({$table_values});\n";
-
-						// Write insert statement
-						ai1wm_write( $file_handler, $table_insert );
-
-						// Set current table offset
-						$table_offset++;
-
-						// Set current table rows
-						$table_rows++;
-
-						// Write end of transaction
-						if ( $table_offset % AI1WM_MAX_TRANSACTION_QUERIES === 0 ) {
-							ai1wm_write( $file_handler, "COMMIT;\n" );
-						}
-					}
-				} else {
-
-					// Write end of transaction
-					if ( $table_offset % AI1WM_MAX_TRANSACTION_QUERIES !== 0 ) {
-						ai1wm_write( $file_handler, "COMMIT;\n" );
+						// Write end of statement
+						ai1wm_write( $file_handler, ";\n\n" );
 					}
 
 					// Set curent table index
@@ -760,20 +790,168 @@ abstract class Ai1wm_Database {
 
 					// Set current table offset
 					$table_offset = 0;
-				}
 
-				// Close result cursor
-				$this->free_result( $result );
+				} else {
 
-				// Time elapsed
-				if ( ( $timeout = apply_filters( 'ai1wm_completed_timeout', 10 ) ) ) {
-					if ( ( microtime( true ) - $start ) > $timeout ) {
-						$completed = false;
-						break 2;
+					// Get create table statement
+					if ( $table_offset === 0 ) {
+
+						// Write table drop statement
+						$drop_table = "\nDROP TABLE IF EXISTS `{$new_table_name}`;\n";
+
+						// Write table statement
+						ai1wm_write( $file_handler, $drop_table );
+
+						// Get create table statement
+						$create_table = $this->get_create_table( $table_name );
+
+						// Replace create table name
+						$create_table = $this->replace_table_name( $create_table, $table_name, $new_table_name );
+
+						// Replace create table comments
+						$create_table = $this->replace_table_comments( $create_table );
+
+						// Replace create table constraints
+						$create_table = $this->replace_table_constraints( $create_table );
+
+						// Replace create table options
+						$create_table = $this->replace_table_options( $create_table );
+
+						// Write create table statement
+						ai1wm_write( $file_handler, $create_table );
+
+						// Write end of statement
+						ai1wm_write( $file_handler, ";\n\n" );
 					}
+
+					// Get primary keys
+					$primary_keys = $this->get_primary_keys( $table_name );
+
+					// Get table columns
+					$table_columns = $this->get_column_types( $table_name );
+
+					// Get prefix columns
+					$prefix_columns = $this->get_table_prefix_columns( $table_name );
+
+					do {
+
+						// Set query
+						if ( $primary_keys ) {
+
+							// Set table keys
+							$table_keys = array();
+							foreach ( $primary_keys as $key ) {
+								$table_keys[] = sprintf( '`%s`', $key );
+							}
+
+							$table_keys = implode( ', ', $table_keys );
+
+							// Set table where query
+							if ( ! ( $table_where = $this->get_table_where_query( $table_name ) ) ) {
+								$table_where = 1;
+							}
+
+							// Set query with offset and rows count
+							$query = sprintf( 'SELECT t1.* FROM `%s` AS t1 JOIN (SELECT %s FROM `%s` WHERE %s ORDER BY %s LIMIT %d, %d) AS t2 USING (%s)', $table_name, $table_keys, $table_name, $table_where, $table_keys, $table_offset, AI1WM_MAX_SELECT_RECORDS, $table_keys );
+
+						} else {
+
+							$table_keys = 1;
+
+							// Set table where query
+							if ( ! ( $table_where = $this->get_table_where_query( $table_name ) ) ) {
+								$table_where = 1;
+							}
+
+							// Set query with offset and rows count
+							$query = sprintf( 'SELECT * FROM `%s` WHERE %s ORDER BY %s LIMIT %d, %d', $table_name, $table_where, $table_keys, $table_offset, AI1WM_MAX_SELECT_RECORDS );
+						}
+
+						// Run SQL query
+						$result = $this->query( $query );
+
+						// Repair table data
+						if ( $this->errno() === 1194 ) {
+
+							// Current table is marked as crashed and should be repaired
+							$this->repair_table( $table_name );
+
+							// Run SQL query
+							$result = $this->query( $query );
+						}
+
+						// Generate insert statements
+						if ( $num_rows = $this->num_rows( $result ) ) {
+
+							// Loop over table rows
+							while ( $row = $this->fetch_assoc( $result ) ) {
+
+								// Write start transaction
+								if ( $table_offset % AI1WM_MAX_TRANSACTION_QUERIES === 0 ) {
+									ai1wm_write( $file_handler, "START TRANSACTION;\n" );
+								}
+
+								$items = array();
+								foreach ( $row as $key => $value ) {
+									// Replace table prefix columns
+									if ( isset( $prefix_columns[ strtolower( $key ) ] ) ) {
+										$value = $this->replace_column_prefixes( $value, 0 );
+									}
+
+									$items[] = $this->prepare_table_values( $value, $table_columns[ strtolower( $key ) ] );
+								}
+
+								// Set table values
+								$table_values = implode( ',', $items );
+
+								// Set insert statement
+								$table_insert = "INSERT INTO `{$new_table_name}` VALUES ({$table_values});\n";
+
+								// Write insert statement
+								ai1wm_write( $file_handler, $table_insert );
+
+								// Set current table offset
+								$table_offset++;
+
+								// Set current table rows
+								$table_rows++;
+
+								// Write end of transaction
+								if ( $table_offset % AI1WM_MAX_TRANSACTION_QUERIES === 0 ) {
+									ai1wm_write( $file_handler, "COMMIT;\n" );
+								}
+							}
+						} else {
+
+							// Write end of transaction
+							if ( $table_offset % AI1WM_MAX_TRANSACTION_QUERIES !== 0 ) {
+								ai1wm_write( $file_handler, "COMMIT;\n" );
+							}
+
+							// Set curent table index
+							$table_index++;
+
+							// Set current table offset
+							$table_offset = 0;
+						}
+
+						// Close result cursor
+						$this->free_result( $result );
+
+						// Time elapsed
+						if ( ( $timeout = apply_filters( 'ai1wm_completed_timeout', 10 ) ) ) {
+							if ( ( microtime( true ) - $start ) > $timeout ) {
+								$completed = false;
+								break 2;
+							}
+						}
+					} while ( $num_rows > 0 );
 				}
-			} while ( $num_rows > 0 );
+			}
 		}
+
+		// Set query offset
+		$query_offset = ftell( $file_handler );
 
 		// Close file handler
 		ai1wm_close( $file_handler );
@@ -793,7 +971,7 @@ abstract class Ai1wm_Database {
 		$max_allowed_packet = $this->get_max_allowed_packet();
 
 		// Set file handler
-		$file_handler = ai1wm_open( $file_name, 'r' );
+		$file_handler = ai1wm_open( $file_name, 'rb' );
 
 		// Start time
 		$start = microtime( true );
@@ -859,10 +1037,57 @@ abstract class Ai1wm_Database {
 								// Run SQL query
 								$this->query( $query );
 							}
-						}
 
-						// Set query offset
-						$query_offset = ftell( $file_handler );
+							// Check tablespace exists
+							if ( $this->errno() === 1813 ) {
+								throw new Ai1wm_Database_Exception( __( 'Error importing database table. <a href="https://help.servmask.com/knowledgebase/mysql-error-importing-table/" target="_blank">Technical details</a>', AI1WM_PLUGIN_NAME ), 503 );
+							}
+
+							// Check max queries per hour
+							if ( $this->errno() === 1226 ) {
+								if ( stripos( $this->error(), 'max_queries_per_hour' ) !== false ) {
+									throw new Ai1wm_Database_Exception(
+										__(
+											'Your WordPress installation has reached the maximum allowed queries per hour set by your server admin or hosting provider. ' .
+											'To use All-in-One WP Migration, please increase MySQL max_queries_per_hour limit. ' .
+											'<a href="https://help.servmask.com/knowledgebase/mysql-error-codes/#max-queries-per-hour" target="_blank">Technical details</a>',
+											AI1WM_PLUGIN_NAME
+										),
+										503
+									);
+								} elseif ( stripos( $this->error(), 'max_updates_per_hour' ) !== false ) {
+									throw new Ai1wm_Database_Exception(
+										__(
+											'Your WordPress installation has reached the maximum allowed updates per hour set by your server admin or hosting provider. ' .
+											'To use All-in-One WP Migration, please increase MySQL max_updates_per_hour limit. ' .
+											'<a href="https://help.servmask.com/knowledgebase/mysql-error-codes/#max-updates-per-hour" target="_blank">Technical details</a>',
+											AI1WM_PLUGIN_NAME
+										),
+										503
+									);
+								} elseif ( stripos( $this->error(), 'max_connections_per_hour' ) !== false ) {
+									throw new Ai1wm_Database_Exception(
+										__(
+											'Your WordPress installation has reached the maximum allowed connections per hour set by your server admin or hosting provider. ' .
+											'To use All-in-One WP Migration, please increase MySQL max_connections_per_hour limit. ' .
+											'<a href="https://help.servmask.com/knowledgebase/mysql-error-codes/#max-connections-per-hour" target="_blank">Technical details</a>',
+											AI1WM_PLUGIN_NAME
+										),
+										503
+									);
+								} elseif ( stripos( $this->error(), 'max_user_connections' ) !== false ) {
+									throw new Ai1wm_Database_Exception(
+										__(
+											'Your WordPress installation has reached the maximum allowed user connections set by your server admin or hosting provider. ' .
+											'To use All-in-One WP Migration, please increase MySQL max_user_connections limit. ' .
+											'<a href="https://help.servmask.com/knowledgebase/mysql-error-codes/#max-user-connections" target="_blank">Technical details</a>',
+											AI1WM_PLUGIN_NAME
+										),
+										503
+									);
+								}
+							}
+						}
 
 						// Time elapsed
 						if ( ( $timeout = apply_filters( 'ai1wm_completed_timeout', 10 ) ) ) {
@@ -883,6 +1108,9 @@ abstract class Ai1wm_Database {
 			$this->query( 'COMMIT' );
 		}
 
+		// Set query offset
+		$query_offset = ftell( $file_handler );
+
 		// Close file handler
 		ai1wm_close( $file_handler );
 
@@ -895,8 +1123,13 @@ abstract class Ai1wm_Database {
 	 * @return void
 	 */
 	public function flush() {
+		$views = $this->get_views();
 		foreach ( $this->get_tables() as $table_name ) {
-			$this->query( "DROP TABLE IF EXISTS `{$table_name}`" );
+			if ( in_array( $table_name, $views ) ) {
+				$this->query( "DROP VIEW IF EXISTS `{$table_name}`" );
+			} else {
+				$this->query( "DROP TABLE IF EXISTS `{$table_name}`" );
+			}
 		}
 	}
 
@@ -937,6 +1170,24 @@ abstract class Ai1wm_Database {
 	}
 
 	/**
+	 * Get MySQL lower case table names
+	 *
+	 * @return integer
+	 */
+	protected function get_lower_case_table_names() {
+		$result = $this->query( "SHOW VARIABLES LIKE 'lower_case_table_names'" );
+		$row    = $this->fetch_assoc( $result );
+
+		// Close result cursor
+		$this->free_result( $result );
+
+		// Get lower case table names
+		if ( isset( $row['Value'] ) ) {
+			return $row['Value'];
+		}
+	}
+
+	/**
 	 * Get MySQL collation name
 	 *
 	 * @param  string $collation_name Collation name
@@ -952,6 +1203,25 @@ abstract class Ai1wm_Database {
 		// Get collation name
 		if ( isset( $row['Collation'] ) ) {
 			return $row['Collation'];
+		}
+	}
+
+	/**
+	 * Get MySQL create view
+	 *
+	 * @param  string $view_name View name
+	 * @return string
+	 */
+	protected function get_create_view( $view_name ) {
+		$result = $this->query( "SHOW CREATE VIEW `{$view_name}`" );
+		$row    = $this->fetch_assoc( $result );
+
+		// Close result cursor
+		$this->free_result( $result );
+
+		// Get create view
+		if ( isset( $row['Create View'] ) ) {
+			return $row['Create View'];
 		}
 	}
 
@@ -1054,6 +1324,67 @@ abstract class Ai1wm_Database {
 	}
 
 	/**
+	 * Replace table name
+	 *
+	 * @param  string $input          Table value
+	 * @param  string $old_table_name Old table name
+	 * @param  string $new_table_name New table name
+	 * @return string
+	 */
+	protected function replace_table_name( $input, $old_table_name, $new_table_name ) {
+		$position = stripos( $input, "`$old_table_name`" );
+		if ( $position !== false ) {
+			$input = substr_replace( $input, "`$new_table_name`", $position, strlen( "`$old_table_name`" ) );
+		}
+
+		return $input;
+	}
+
+	/**
+	 * Replace view name
+	 *
+	 * @param  string $input         View value
+	 * @param  string $old_view_name Old view name
+	 * @param  string $new_view_name New view name
+	 * @return string
+	 */
+	protected function replace_view_name( $input, $old_view_name, $new_view_name ) {
+		$position = stripos( $input, "`$old_view_name`" );
+		if ( $position !== false ) {
+			$input = substr_replace( $input, "`$new_view_name`", $position, strlen( "`$old_view_name`" ) );
+		}
+
+		return $input;
+	}
+
+	/**
+	 * Replace view identifiers
+	 *
+	 * @param  string $input Table value
+	 * @return string
+	 */
+	protected function replace_view_identifiers( $input ) {
+		$base_tables = $this->get_base_tables();
+		foreach ( $base_tables as $table_name ) {
+			if ( ( $new_table_name = $this->replace_table_prefixes( $table_name, 0 ) ) ) {
+				$input = str_ireplace( "`$table_name`", "`$new_table_name`", $input );
+			}
+		}
+
+		return $input;
+	}
+
+	/**
+	 * Replace view options
+	 *
+	 * @param  string $input Table value
+	 * @return string
+	 */
+	protected function replace_view_options( $input ) {
+		return preg_replace( '/CREATE(.+?)VIEW/i', 'CREATE VIEW', $input );
+	}
+
+	/**
 	 * Replace table prefixes
 	 *
 	 * @param  string $input    Table value
@@ -1061,7 +1392,6 @@ abstract class Ai1wm_Database {
 	 * @return string
 	 */
 	protected function replace_table_prefixes( $input, $position = false ) {
-		// Get table prefixes
 		$search  = $this->get_old_table_prefixes();
 		$replace = $this->get_new_table_prefixes();
 
@@ -1088,7 +1418,6 @@ abstract class Ai1wm_Database {
 	 * @return string
 	 */
 	protected function replace_column_prefixes( $input, $position = false ) {
-		// Get column prefixes
 		$search  = $this->get_old_column_prefixes();
 		$replace = $this->get_new_column_prefixes();
 
@@ -1119,8 +1448,13 @@ abstract class Ai1wm_Database {
 			$input = preg_replace_callback( '/\[vc_raw_html\]([a-zA-Z0-9\/+]+={0,2})\[\/vc_raw_html\]/S', array( $this, 'replace_visual_composer_values_callback' ), $input );
 		}
 
-		// Replace base64 encoded values (BeTheme Responsive and Optimize Press)
-		if ( $this->get_betheme_responsive() || $this->get_optimize_press() ) {
+		// Replace base64 encoded values (Oxygen Builder)
+		if ( $this->get_oxygen_builder() ) {
+			$input = preg_replace_callback( '/\\\\"(code-php|code-css|code-js)\\\\":\\\\"([a-zA-Z0-9\/+]+={0,2})\\\\"/S', array( $this, 'replace_oxygen_builder_values_callback' ), $input );
+		}
+
+		// Replace base64 encoded values (BeTheme Responsive, Optimize Press and Avada Fusion Builder)
+		if ( $this->get_betheme_responsive() || $this->get_optimize_press() || $this->get_avada_fusion_builder() ) {
 			$input = preg_replace_callback( "/'([a-zA-Z0-9\/+]+={0,2})'/S", array( $this, 'replace_base64_values_callback' ), $input );
 		}
 
@@ -1156,6 +1490,29 @@ abstract class Ai1wm_Database {
 		}
 
 		return '[vc_raw_html]' . $matches[1] . '[/vc_raw_html]';
+	}
+
+	/**
+	 * Replace base64 values callback (Oxygen Builder)
+	 *
+	 * @param  array  $matches List of matches
+	 * @return string
+	 */
+	protected function replace_oxygen_builder_values_callback( $matches ) {
+		// Validate base64 data
+		if ( Ai1wm_Database_Utility::base64_validate( $matches[2] ) ) {
+
+			// Decode base64 characters
+			$matches[2] = Ai1wm_Database_Utility::base64_decode( $matches[2] );
+
+			// Replace values
+			$matches[2] = Ai1wm_Database_Utility::replace_values( $this->get_old_replace_values(), $this->get_new_replace_values(), $matches[2] );
+
+			// Encode base64 characters
+			$matches[2] = Ai1wm_Database_Utility::base64_encode( $matches[2] );
+		}
+
+		return '\"' . $matches[1] . '\":\"' . $matches[2] . '\"';
 	}
 
 	/**
@@ -1214,12 +1571,15 @@ abstract class Ai1wm_Database {
 		if ( empty( $search ) || empty( $replace ) ) {
 			if ( ! $this->wpdb->has_cap( 'utf8mb4_520' ) ) {
 				if ( ! $this->wpdb->has_cap( 'utf8mb4' ) ) {
-					$search  = array( 'utf8mb4_unicode_520_ci', 'utf8mb4' );
-					$replace = array( 'utf8_unicode_ci', 'utf8' );
+					$search  = array( 'utf8mb4_0900_ai_ci', 'utf8mb4_unicode_520_ci', 'utf8mb4' );
+					$replace = array( 'utf8_unicode_ci', 'utf8_unicode_ci', 'utf8' );
 				} else {
-					$search  = array( 'utf8mb4_unicode_520_ci' );
-					$replace = array( 'utf8mb4_unicode_ci' );
+					$search  = array( 'utf8mb4_0900_ai_ci', 'utf8mb4_unicode_520_ci' );
+					$replace = array( 'utf8mb4_unicode_ci', 'utf8mb4_unicode_ci' );
 				}
+			} else {
+				$search  = array( 'utf8mb4_0900_ai_ci' );
+				$replace = array( 'utf8mb4_unicode_520_ci' );
 			}
 		}
 
@@ -1234,6 +1594,16 @@ abstract class Ai1wm_Database {
 	 */
 	protected function replace_raw_values( $input ) {
 		return Ai1wm_Database_Utility::replace_values( $this->get_old_replace_raw_values(), $this->get_new_replace_raw_values(), $input );
+	}
+
+	/**
+	 * Replace table comments
+	 *
+	 * @param  string $input SQL statement
+	 * @return string
+	 */
+	protected function replace_table_comments( $input ) {
+		return preg_replace( '/\/\*(.+?)\*\//s', '', $input );
 	}
 
 	/**
@@ -1472,7 +1842,7 @@ abstract class Ai1wm_Database {
 	protected function get_header() {
 		// Some info about software, source and time
 		$header = sprintf(
-			"-- All In One WP Migration SQL Dump\n" .
+			"-- All-in-One WP Migration SQL Dump\n" .
 			"-- https://servmask.com/\n" .
 			"--\n" .
 			"-- Host: %s\n" .
