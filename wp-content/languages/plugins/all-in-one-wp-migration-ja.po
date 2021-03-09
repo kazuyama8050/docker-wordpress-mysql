@@ -2,11 +2,16 @@
 # This file is distributed under the same license as the Plugins - All-in-One WP Migration - Stable (latest release) package.
 msgid ""
 msgstr ""
+<<<<<<< HEAD
 "PO-Revision-Date: 2021-02-12 02:21:26+0000\n"
+=======
+"PO-Revision-Date: 2019-07-24 01:16:42+0000\n"
+>>>>>>> test
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+<<<<<<< HEAD
 "X-Generator: GlotPress/3.0.0-alpha.2\n"
 "Language: ja_JP\n"
 "Project-Id-Version: Plugins - All-in-One WP Migration - Stable (latest release)\n"
@@ -99,6 +104,16 @@ msgstr "All-in-One WP Migration: 現在ログインしている権限ではサ�
 msgid "To choose a file please go inside the link and click on the browse button."
 msgstr "ファイルを選択するには、リンク内に移動し、参照ボタンをクリックしてください。"
 
+=======
+"X-Generator: GlotPress/2.4.0-alpha\n"
+"Language: ja_JP\n"
+"Project-Id-Version: Plugins - All-in-One WP Migration - Stable (latest release)\n"
+
+#: lib/view/backups/backups-list.php:46 lib/view/backups/index.php:51
+msgid "Refreshing backup list..."
+msgstr "バックアップ一覧を再読み込み中…"
+
+>>>>>>> test
 #: lib/view/backups/backups-list.php:100
 msgid "Delete backup"
 msgstr "バックアップを削除"
@@ -111,6 +126,7 @@ msgstr "バックアップから復元"
 msgid "Download backup"
 msgstr "バックアップをダウンロード"
 
+<<<<<<< HEAD
 #: lib/view/import/done.php:38
 msgid "» <a class=\"ai1wm-no-underline\" href=\"%s\" target=\"_blank\">Save permalinks structure</a>. (opens a new window)<br />» <a class=\"ai1wm-no-underline\" href=\"https://wordpress.org/support/view/plugin-reviews/all-in-one-wp-migration?rate=5#postform\" target=\"_blank\">Optionally, review the plugin</a>. (opens a new window)"
 msgstr "» <a class=\"ai1wm-no-underline\" href=\"%s\" target=\"_blank\">パーマリンク構造を保存する</a> (新しいウィンドウで開く)。<br />» <a class=\"ai1wm-no-underline\" href=\"https://wordpress.org/support/view/plugin-reviews/all-in-one-wp-migration?rate=5#postform\" target=\"_blank\">オプションとして、プラグインをレビューする</a> (新しいウィンドウで開く)。"
@@ -121,6 +137,18 @@ msgstr "「復元」機能は<a href=\"https://servmask.com/products/unlimited-e
 
 #: lib/controller/class-ai1wm-main-controller.php:873
 #: lib/controller/class-ai1wm-main-controller.php:1055
+=======
+#: lib/model/import/class-ai1wm-import-done.php:218
+msgid "» <a class=\"ai1wm-no-underline\" href=\"%s\" target=\"_blank\">Save permalinks structure</a>.</strong> (opens a new window)<br />» <a class=\"ai1wm-no-underline\" href=\"https://wordpress.org/support/view/plugin-reviews/all-in-one-wp-migration?rate=5#postform\" target=\"_blank\">Optionally, review the plugin</a>.</strong> (opens a new window)"
+msgstr "» <a class=\"ai1wm-no-underline\" href=\"%s\" target=\"_blank\">パーマリンク構造を保存する</a>。</strong> (新しいウインドウが開きます)<br />» <a class=\"ai1wm-no-underline\" href=\"https://wordpress.org/support/view/plugin-reviews/all-in-one-wp-migration?rate=5#postform\" target=\"_blank\">または、プラグインのレビューを書く</a>。</strong> (新しいウインドウが開きます)"
+
+#: lib/controller/class-ai1wm-main-controller.php:938
+msgid "\"Restore\" functionality is available in a <a href=\"https://servmask.com/products/unlimited-extension\" target=\"_blank\">paid extension</a>.<br />You could also download the backup and then use \"Import from file\"."
+msgstr "「復元」機能は<a href=\"https://servmask.com/products/unlimited-extension\" target=\"_blank\">有料拡張</a>でご利用いただけます。<br />また、バックアップをダウンロードして「ファイルからインポート」をお使いいただくこともできます。"
+
+#: lib/controller/class-ai1wm-main-controller.php:784
+#: lib/controller/class-ai1wm-main-controller.php:926
+>>>>>>> test
 msgid "Finish"
 msgstr "完了"
 
@@ -132,6 +160,7 @@ msgstr "クリックしてこのバックアップのラベルを設定"
 msgid "<a href=\"%s\" class=\"ai1wm-button-green ai1wm-emphasize ai1wm-button-download\" title=\"%s\" download=\"%s\"><span>Download %s</span><em>Size: %s</em></a>"
 msgstr "<a href=\"%s\" class=\"ai1wm-button-green ai1wm-emphasize ai1wm-button-download\" title=\"%s\" download=\"%s\"><span>%s をダウンロード</span> <em>サイズ: %s</em></a>"
 
+<<<<<<< HEAD
 #: lib/controller/class-ai1wm-export-controller.php:83
 msgid "Unable to export: %s"
 msgstr "エクスポートできませんでした: %s"
@@ -178,10 +207,66 @@ msgid "The file that you are trying to import is over the maximum upload file si
 msgstr "最大アップロードサイズ (<strong>%s</strong>) 以上のファイルをインポートしようとしています。<br />この制限は <a href=\"https://servmask.com/products/unlimited-extension\" target=\"_blank\">Unlimited Extension</a> (拡張プラグイン) を購入すれば外すことができます。"
 
 #: lib/controller/class-ai1wm-main-controller.php:898
+=======
+#: lib/controller/class-ai1wm-export-controller.php:77
+msgid "Unable to export: %s"
+msgstr "エクスポートできませんでした: %s"
+
+#: lib/controller/class-ai1wm-import-controller.php:85
+msgid "Unable to import: %s"
+msgstr "インポートできませんでした: %s"
+
+#: lib/controller/class-ai1wm-import-controller.php:77
+msgid "Unable to import. Error code: %s. %s"
+msgstr "インポートできませんでした。エラーコード: %s。%s"
+
+#: lib/model/import/class-ai1wm-import-confirm.php:73
+msgid "The import process will overwrite your website including the database, media, plugins, and themes. Are you sure to proceed?"
+msgstr "インポート処理により、データベース、メディア、プラグイン、テーマを含むサイトのデータが上書きされます。本当に続行してもよいですか ?"
+
+#: lib/model/import/class-ai1wm-import-confirm.php:60
+msgid "This could cause the import to fail. Technical details: https://help.servmask.com/knowledgebase/migrate-wordpress-from-php-5-to-php-7"
+msgstr "これによりインポートが失敗する可能性があります。技術的詳細: https://help.servmask.com/knowledgebase/migrate-wordpress-from-php-5-to-php-7"
+
+#: lib/model/import/class-ai1wm-import-confirm.php:59
+msgid "Your backup is from a PHP 5 but the site that you are importing to is PHP 7."
+msgstr "バックアップは PHP 5からですが、インポート先のサイトは PHP 7です。"
+
+#: lib/model/import/class-ai1wm-import-validate.php:110
+msgid "Please make sure that your file was exported using <strong>All-in-One WP Migration</strong> plugin. <a href=\"https://help.servmask.com/knowledgebase/invalid-backup-file/\" target=\"_blank\">Technical details</a>"
+msgstr "ファイルが <strong>All-in-One WP Migration</strong> プラグインでエクスポートされたものであることをご確認ください。 <a href=\"https://help.servmask.com/knowledgebase/invalid-backup-file/\" target=\"_blank\">技術的詳細</a>"
+
+#: lib/model/import/class-ai1wm-import-validate.php:81
+msgid "The archive file is corrupted. Follow <a href=\"https://help.servmask.com/knowledgebase/corrupted-archive/\" target=\"_blank\">this article</a> to resolve the problem."
+msgstr "アーカイブファイルが壊れています。<a href=\"https://help.servmask.com/knowledgebase/corrupted-archive/\" target=\"_blank\">この投稿</a>の手順に従って問題を解決してください。"
+
+#: lib/model/import/class-ai1wm-import-validate.php:37
+msgid "Your PHP is 32-bit. In order to import your file, please change your PHP version to 64-bit and try again. <a href=\"https://help.servmask.com/knowledgebase/php-32bit/\" target=\"_blank\">Technical details</a>"
+msgstr "お使いの PHP は 32-bit です。ファイルをインポートするには、PHP のバージョンを 64-bit に変更してからやり直してください。<a href=\"https://help.servmask.com/knowledgebase/php-32bit/\" target=\"_blank\">技術詳細</a>"
+
+#: lib/model/import/class-ai1wm-import-confirm.php:63
+msgid "<i class=\"ai1wm-import-info\">Your backup is from a PHP 5 but the site that you are importing to is PHP 7. This could cause the import to fail. <a href=\"https://help.servmask.com/knowledgebase/migrate-wordpress-from-php-5-to-php-7/\" target=\"_blank\">Technical details</a></i>"
+msgstr "<i class=\"ai1wm-import-info\">バックアップは PHP 5 で作成されていますが、インポートしようとしているサイトは PHP 7 です。これにより、インポートに失敗する可能性があります。 <a href=\"https://help.servmask.com/knowledgebase/migrate-wordpress-from-php-5-to-php-7/\" target=\"_blank\">技術的詳細</a></i>"
+
+#: lib/model/import/class-ai1wm-import-confirm.php:47
+msgid "The import process will overwrite your website including the database, media, plugins, and themes. Please ensure that you have a backup of your data before proceeding to the next step."
+msgstr "インポート処理により、データベース、メディア、プラグイン、テーマを含むサイトのデータが上書きされます。次の手順に進む前に、必ずデータのバックアップを作成してください。"
+
+#: lib/model/class-ai1wm-compatibility.php:53
+msgid "<strong>%s</strong> is not the latest version. You must <a href=\"%s\">update the plugin</a> before you can use it. <br />"
+msgstr "<strong>%s</strong> は最新バージョンではありません。使用前に<a href=\"%s\">プラグインを更新</a>する必要があります。<br />"
+
+#: lib/controller/class-ai1wm-main-controller.php:815
+msgid "The file that you are trying to import is over the maximum upload file size limit of <strong>%s</strong>.<br />You can remove this restriction by purchasing our <a href=\"https://servmask.com/products/unlimited-extension\" target=\"_blank\">Unlimited Extension</a>."
+msgstr "最大アップロードサイズ (<strong>%s</strong>) 以上のファイルをインポートしようとしています。<br />この制限は <a href=\"https://servmask.com/products/unlimited-extension\" target=\"_blank\">Unlimited Extension</a> (拡張プラグイン) を購入すれば外すことができます。"
+
+#: lib/controller/class-ai1wm-main-controller.php:808
+>>>>>>> test
 msgid "The file type that you have tried to upload is not compatible with this plugin. Please ensure that your file is a <strong>.wpress</strong> file that was created with the All-in-One WP migration plugin. <a href=\"https://help.servmask.com/knowledgebase/invalid-backup-file/\" target=\"_blank\">Technical details</a>"
 msgstr "アップロードしようとしているファイルタイプはこのプラグインと互換性がありません。All-in-One WP Migration プラグインが作成した <strong>.wpress</strong> ファイルである事を確認してください。<a href=\"https://help.servmask.com/knowledgebase/invalid-backup-file/\" target=\"_blank\">技術的詳細</a>"
 
 #: lib/view/main/multisite-notice.php:34
+<<<<<<< HEAD
 msgid "WordPress Multisite is supported via our All-in-One WP Migration Multisite Extension. You can get a copy of it here"
 msgstr "WordPress マルチサイトには、All-in-One WP Migration マルチサイト拡張で対応しています。こちらで入手できます"
 
@@ -199,6 +284,23 @@ msgstr "All-in-One Migration は <strong>%s</strong> ファイルを作成でき
 #: lib/view/main/storage-path-notice.php:35
 msgid "All-in-One WP Migration is not able to create <strong>%s</strong> folder. You will need to create this folder and grant it read/write/execute permissions (0777) for the All-in-One WP Migration plugin to function properly."
 msgstr "All-in-One WP Migration は <strong>%s</strong> フォルダーを作成できません。All-in-One WP Migration プラグインが正しく機能するには、このフォルダーを作成して読み取り/書き込み/実行権限 (0777) を与える必要があります。"
+=======
+msgid "WordPress Multisite is supported via our All in One WP Migration Multisite Extension. You can get a copy of it here"
+msgstr "WordPress マルチサイトには、All in One WP Migration マルチサイト拡張で対応しています。こちらで入手できます"
+
+#: lib/view/main/storage-index-notice.php:35
+#: lib/view/main/backups-webconfig-notice.php:35
+#: lib/view/main/backups-index-notice.php:35
+#: lib/view/main/wordpress-htaccess-notice.php:35
+#: lib/view/main/backups-htaccess-notice.php:35
+msgid "All in One WP Migration is not able to create <strong>%s</strong> file. Try to change permissions of the parent folder or send us an email at <a href=\"mailto:support@servmask.com\">support@servmask.com</a> for assistance."
+msgstr "All in One WP Migration で <strong>%s</strong> ファイルを作成できません。 親フォルダーのパーミッションを変更するか、<a href=\"mailto:support@servmask.com\">support@servmask.com</a> までメールでお問い合わせください。"
+
+#: lib/view/main/backups-path-notice.php:35
+#: lib/view/main/storage-path-notice.php:35
+msgid "All in One WP Migration is not able to create <strong>%s</strong> folder. You will need to create this folder and grant it read/write/execute permissions (0777) for the All in One WP Migration plugin to function properly."
+msgstr "All in One WP Migration で <strong>%s</strong> フォルダーを作成できません。All in One WP Migration プラグインが正しく機能するためには、このフォルダーを作成して読み取り/書き込み/実行権限 (0777) を与える必要があります。"
+>>>>>>> test
 
 #: lib/view/import/pro.php:36
 msgid "or"
@@ -212,6 +314,7 @@ msgstr "最大アップロードファイルサイズを上げる方法"
 msgid "Maximum upload file size: <strong>%s</strong>."
 msgstr "最大アップロードファイルサイズ: <strong>%s</strong>."
 
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-upload.php:68
 msgid "The file is too large for this server."
 msgstr "ファイルがサーバーの許容サイズを超えています。"
@@ -225,6 +328,21 @@ msgid "<a href=\"https://help.servmask.com/2018/10/27/how-to-increase-maximum-up
 msgstr "<a href=\"https://help.servmask.com/2018/10/27/how-to-increase-maximum-upload-file-size-in-wordpress/\" target=\"_blank\">ファイルアップロードサイズを上げる方法</a> または"
 
 #: lib/controller/class-ai1wm-main-controller.php:884
+=======
+#: lib/model/import/class-ai1wm-import-upload.php:83
+msgid "The file is too large for this server."
+msgstr "ファイルがサーバーの許容サイズを超えています。"
+
+#: lib/controller/class-ai1wm-main-controller.php:803
+msgid "<a href=\"https://import.wp-migration.com\" target=\"_blank\">Get unlimited</a>"
+msgstr "<a href=\"https://import.wp-migration.com\" target=\"_blank\">制限をなくす</a>"
+
+#: lib/controller/class-ai1wm-main-controller.php:799
+msgid "<a href=\"https://help.servmask.com/2018/10/27/how-to-increase-maximum-upload-file-size-in-wordpress/\" target=\"_blank\">How-to: Increase maximum upload file size</a> or "
+msgstr "<a href=\"https://help.servmask.com/2018/10/27/how-to-increase-maximum-upload-file-size-in-wordpress/\" target=\"_blank\">ファイルアップロードサイズを上げる方法</a> または"
+
+#: lib/controller/class-ai1wm-main-controller.php:794
+>>>>>>> test
 msgid "Your file exceeds the maximum upload size for this site: <strong>%s</strong><br />%s%s"
 msgstr "サイトの最大アップロードサイズを超過しています: <strong>%s</strong><br />%s%s"
 
@@ -232,6 +350,7 @@ msgstr "サイトの最大アップロードサイズを超過しています: <
 msgid "Drag & Drop a backup to import it"
 msgstr "バックアップをドラッグ & ドロップしてインポートする"
 
+<<<<<<< HEAD
 #: lib/model/export/class-ai1wm-export-database.php:79
 #: lib/model/export/class-ai1wm-export-database.php:175
 msgid "Exporting database...<br />%d%% complete<br />%s records saved"
@@ -247,6 +366,23 @@ msgstr "All-in-One WP Migration コマンド"
 
 #: lib/controller/class-ai1wm-main-controller.php:742
 #: lib/controller/class-ai1wm-main-controller.php:1039
+=======
+#: lib/model/export/class-ai1wm-export-database.php:72
+#: lib/model/export/class-ai1wm-export-database.php:176
+msgid "Exporting database...<br />%d%% complete<br />%s records saved"
+msgstr "データベースをエクスポート中...<br />%d%% 完了<br />%s 件保存済み"
+
+#: lib/controller/class-ai1wm-main-controller.php:937
+msgid "Restoring a backup is available via Unlimited extension. <a href=\"https://servmask.com/products/unlimited-extension\" target=\"_blank\">Get it here</a>"
+msgstr "バックアップのリストアには、アンリミテッド拡張機能にて対応しています。<a href=\"https://servmask.com/products/unlimited-extension\" target=\"_blank\">ここから入手</a>"
+
+#: lib/controller/class-ai1wm-main-controller.php:248
+msgid "All-in-One WP Migration Command"
+msgstr "All-in-One WP Migration コマンド"
+
+#: lib/controller/class-ai1wm-main-controller.php:687
+#: lib/controller/class-ai1wm-main-controller.php:910
+>>>>>>> test
 msgid "Preparing to export..."
 msgstr "エクスポートを準備中..."
 
@@ -254,6 +390,7 @@ msgstr "エクスポートを準備中..."
 msgid "%s ago"
 msgstr "%s前"
 
+<<<<<<< HEAD
 #: lib/controller/class-ai1wm-main-controller.php:1122
 msgid "Your purchase ID is invalid, please <a href=\"mailto:support@servmask.com\">contact us</a>"
 msgstr "購入の ID が無効です。<a href=\"mailto:support@servmask.com\">お問い合わせください。</a>"
@@ -402,6 +539,156 @@ msgid "Unable to write to: %s. <a href=\"https://help.servmask.com/knowledgebase
 msgstr "%sに書き込めません。<a href=\"https://help.servmask.com/knowledgebase/invalid-file-permissions/\" target=\"_blank\">技術情報</a>"
 
 #: functions.php:1411
+=======
+#: lib/controller/class-ai1wm-main-controller.php:979
+msgid "Your purchase ID is invalid, please <a href=\"mailto:support@servmask.com\">contact us</a>"
+msgstr "購入の ID が無効です。<a href=\"mailto:support@servmask.com\">お問い合わせください。</a>"
+
+#: lib/controller/class-ai1wm-main-controller.php:936
+msgid "Are you sure you want to delete this file?"
+msgstr "このファイルを削除してもよろしいですか ?"
+
+#: lib/controller/class-ai1wm-main-controller.php:788
+#: lib/controller/class-ai1wm-main-controller.php:931
+msgid "Please do not close this browser window or your import will fail"
+msgstr "ブラウザのウィンドウを閉じないでください。インポートが失敗します。"
+
+#: lib/controller/class-ai1wm-main-controller.php:787
+#: lib/controller/class-ai1wm-main-controller.php:930
+msgid "Continue"
+msgstr "続ける"
+
+#: lib/controller/class-ai1wm-main-controller.php:786
+#: lib/controller/class-ai1wm-main-controller.php:929
+msgid "Proceed"
+msgstr "開始"
+
+#: lib/controller/class-ai1wm-main-controller.php:785
+#: lib/controller/class-ai1wm-main-controller.php:928
+msgid "Stop import"
+msgstr "インポートを停止"
+
+#: lib/controller/class-ai1wm-main-controller.php:782
+#: lib/controller/class-ai1wm-main-controller.php:925
+msgid "Please wait, stopping the import..."
+msgstr "お待ちください。インポートを停止中..."
+
+#: lib/controller/class-ai1wm-main-controller.php:781
+#: lib/controller/class-ai1wm-main-controller.php:924
+msgid "Unable to stop the import. Refresh the page and try again"
+msgstr "インポートを停止できません。ページを更新してもう一度お試しください。"
+
+#: lib/controller/class-ai1wm-main-controller.php:780
+#: lib/controller/class-ai1wm-main-controller.php:923
+msgid "Unable to prepare blogs on import. Refresh the page and try again"
+msgstr "インポートにブログを準備できません。ページを更新してもう一度やり直してください。"
+
+#: lib/controller/class-ai1wm-main-controller.php:779
+#: lib/controller/class-ai1wm-main-controller.php:922
+msgid "Unable to confirm the import. Refresh the page and try again"
+msgstr "インポートを確認できません。ページを更新してもう一度お試しください。 "
+
+#: lib/controller/class-ai1wm-main-controller.php:778
+#: lib/controller/class-ai1wm-main-controller.php:921
+msgid "Unable to start the import. Refresh the page and try again"
+msgstr "インポートを開始できません。ページを更新してもう一度お試しください。"
+
+#: lib/controller/class-ai1wm-main-controller.php:775
+#: lib/controller/class-ai1wm-main-controller.php:918
+msgid "You are about to stop importing your website, are you sure?"
+msgstr "本当にサイトのインポートを停止してもよろしいですか ?"
+
+#: lib/controller/class-ai1wm-main-controller.php:622
+#: lib/controller/class-ai1wm-main-controller.php:698
+#: lib/controller/class-ai1wm-main-controller.php:792
+#: lib/controller/class-ai1wm-main-controller.php:935
+msgid "Thanks for submitting your request!"
+msgstr "リクエストをお寄せいただきありがとうございます !"
+
+#: lib/controller/class-ai1wm-main-controller.php:621
+#: lib/controller/class-ai1wm-main-controller.php:697
+#: lib/controller/class-ai1wm-main-controller.php:791
+#: lib/controller/class-ai1wm-main-controller.php:934
+msgid "Thanks for submitting your feedback!"
+msgstr "フィードバックをお寄せいただきありがとうございます !"
+
+#: lib/controller/class-ai1wm-main-controller.php:620
+#: lib/controller/class-ai1wm-main-controller.php:696
+#: lib/controller/class-ai1wm-main-controller.php:790
+#: lib/controller/class-ai1wm-main-controller.php:933
+msgid "How may we help you?"
+msgstr "お困りですか ?"
+
+#: lib/controller/class-ai1wm-main-controller.php:619
+#: lib/controller/class-ai1wm-main-controller.php:695
+#: lib/controller/class-ai1wm-main-controller.php:789
+#: lib/controller/class-ai1wm-main-controller.php:932
+msgid "Leave plugin developers any feedback here"
+msgstr "プラグイン作者へのフィードバックはこちら"
+
+#: lib/controller/class-ai1wm-main-controller.php:694
+#: lib/controller/class-ai1wm-main-controller.php:917
+msgid "Stop export"
+msgstr "エクスポートを停止"
+
+#: lib/controller/class-ai1wm-main-controller.php:693
+#: lib/controller/class-ai1wm-main-controller.php:783
+#: lib/controller/class-ai1wm-main-controller.php:916
+#: lib/controller/class-ai1wm-main-controller.php:927
+msgid "Close"
+msgstr "閉じる"
+
+#: lib/controller/class-ai1wm-main-controller.php:692
+#: lib/controller/class-ai1wm-main-controller.php:915
+msgid "Please wait, stopping the export..."
+msgstr "お待ちください。エクスポートを停止中..."
+
+#: lib/controller/class-ai1wm-main-controller.php:691
+#: lib/controller/class-ai1wm-main-controller.php:914
+msgid "Unable to stop the export. Refresh the page and try again"
+msgstr "エクスポートを停止できません。ページを更新してもう一度お試しください。"
+
+#: lib/controller/class-ai1wm-main-controller.php:690
+#: lib/controller/class-ai1wm-main-controller.php:913
+msgid "Unable to run the export. Refresh the page and try again"
+msgstr "エクスポートを実行できません。ページを更新してもう一度お試しください。"
+
+#: lib/controller/class-ai1wm-main-controller.php:689
+#: lib/controller/class-ai1wm-main-controller.php:912
+msgid "Unable to start the export. Refresh the page and try again"
+msgstr "エクスポートを開始できません。ページを更新してもう一度お試しください。"
+
+#: lib/controller/class-ai1wm-main-controller.php:686
+#: lib/controller/class-ai1wm-main-controller.php:909
+msgid "You are about to stop exporting your website, are you sure?"
+msgstr "本当にサイトのエクスポートを停止してもよろしいですか ?"
+
+#: functions.php:1373
+msgid "Unable to authenticate the secret key. <a href=\"https://help.servmask.com/knowledgebase/invalid-secret-key/\" target=\"_blank\">Technical details</a>"
+msgstr "シークレットキーを認証できません。<a href=\"https://help.servmask.com/knowledgebase/invalid-secret-key/\" target=\"_blank\">技術情報</a>"
+
+#: functions.php:1273
+msgid "Unable to get current pointer position of %s. <a href=\"https://help.servmask.com/knowledgebase/php-32bit/\" target=\"_blank\">Technical details</a>"
+msgstr "%sの現在のポインター位置を取得できません。<a href=\"https://help.servmask.com/knowledgebase/php-32bit/\" target=\"_blank\">技術情報</a>"
+
+#: functions.php:1256
+msgid "Unable to seek to offset %d on %s. <a href=\"https://help.servmask.com/knowledgebase/php-32bit/\" target=\"_blank\">Technical details</a>"
+msgstr "%d対%sで相殺することはできません。<a href=\"https://help.servmask.com/knowledgebase/php-32bit/\" target=\"_blank\">技術情報</a>"
+
+#: functions.php:1239
+msgid "Unable to read file: %s. <a href=\"https://help.servmask.com/knowledgebase/invalid-file-permissions/\" target=\"_blank\">Technical details</a>"
+msgstr "ファイルを読み取ることができません: %s。<a href=\"https://help.servmask.com/knowledgebase/invalid-file-permissions/\" target=\"_blank\">技術情報</a>"
+
+#: functions.php:1220
+msgid "Out of disk space. Unable to write to: %s. <a href=\"https://help.servmask.com/knowledgebase/out-of-disk-space/\" target=\"_blank\">Technical details</a>"
+msgstr "ディスク領域が不足しているため、%s に書き込めません。<a href=\"https://help.servmask.com/knowledgebase/out-of-disk-space/\" target=\"_blank\">技術情報</a>"
+
+#: functions.php:1216
+msgid "Unable to write to: %s. <a href=\"https://help.servmask.com/knowledgebase/invalid-file-permissions/\" target=\"_blank\">Technical details</a>"
+msgstr "%sに書き込めません。<a href=\"https://help.servmask.com/knowledgebase/invalid-file-permissions/\" target=\"_blank\">技術情報</a>"
+
+#: functions.php:1197
+>>>>>>> test
 msgid "Unable to open %s with mode %s. <a href=\"https://help.servmask.com/knowledgebase/invalid-file-permissions/\" target=\"_blank\">Technical details</a>"
 msgstr "%sを%sモードで開くことができません。<a href=\"https://help.servmask.com/knowledgebase/invalid-file-permissions/\" target=\"_blank\">技術情報</a>"
 
@@ -421,7 +708,11 @@ msgstr "ストレージパスが見つかりません。<a href=\"https://help.s
 msgid "I agree that by filling in the contact form with my data, I authorize All-in-One WP Migration to use my <strong>email</strong> to reply to my requests for information. <a href=\"https://www.iubenda.com/privacy-policy/946881\" target=\"_blank\">Privacy policy</a>"
 msgstr "お問い合わせフォームに情報を入力することで、All-in-One WP Migration が自分の<strong>メールアドレス</strong>を利用して返信することに同意します。<a href=\"https://www.iubenda.com/privacy-policy/946881\" target=\"_blank\">プライバシーポリシー</a>"
 
+<<<<<<< HEAD
 #: lib/model/export/class-ai1wm-export-config.php:167
+=======
+#: lib/model/export/class-ai1wm-export-config.php:158
+>>>>>>> test
 msgid "Done preparing configuration file."
 msgstr "設定ファイルの準備ができました。"
 
@@ -442,12 +733,21 @@ msgstr "設定ファイルをアーカイブしています...<br />%d%% 完了"
 msgid "2GB+"
 msgstr "2GB 以上"
 
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-validate.php:101
 msgid "Done unpacking archive."
 msgstr "アーカイブを展開しました。"
 
 #: lib/model/import/class-ai1wm-import-validate.php:64
 #: lib/model/import/class-ai1wm-import-validate.php:121
+=======
+#: lib/model/import/class-ai1wm-import-validate.php:119
+msgid "Done unpacking archive."
+msgstr "アーカイブを展開しました。"
+
+#: lib/model/import/class-ai1wm-import-validate.php:70
+#: lib/model/import/class-ai1wm-import-validate.php:139
+>>>>>>> test
 msgid "Unpacking archive...<br />%d%% complete"
 msgstr "アーカイブを展開中...<br />%d%% 完了"
 
@@ -461,7 +761,11 @@ msgid "Archiving database...<br />%d%% complete"
 msgstr "データベースをアーカイブ中...<br />%d%% 完了"
 
 #: lib/model/import/class-ai1wm-import-database.php:78
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-database.php:989
+=======
+#: lib/model/import/class-ai1wm-import-database.php:788
+>>>>>>> test
 msgid "Restoring database...<br />%d%% complete"
 msgstr "データベースの復元中...<br />%d%%完了"
 
@@ -470,6 +774,7 @@ msgstr "データベースの復元中...<br />%d%%完了"
 msgid "Checking extensions compatibility..."
 msgstr "拡張機能の互換性を確認しています..."
 
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-database.php:969
 msgid "Done restoring database."
 msgstr "データベースを復元しました。"
@@ -484,6 +789,22 @@ msgid "Monthly"
 msgstr "毎月"
 
 #: lib/controller/class-ai1wm-main-controller.php:1220
+=======
+#: lib/model/import/class-ai1wm-import-database.php:768
+msgid "Done restoring database."
+msgstr "データベースを復元しました。"
+
+#: lib/controller/class-ai1wm-main-controller.php:776
+#: lib/controller/class-ai1wm-main-controller.php:919
+msgid "Preparing to import..."
+msgstr "インポートを準備中..."
+
+#: lib/controller/class-ai1wm-main-controller.php:1068
+msgid "Monthly"
+msgstr "毎月"
+
+#: lib/controller/class-ai1wm-main-controller.php:1064
+>>>>>>> test
 msgid "Weekly"
 msgstr "毎週"
 
@@ -491,7 +812,11 @@ msgstr "毎週"
 msgid "Do <strong>not</strong> export must-use plugins (files)"
 msgstr "必須プラグインをエクスポート<strong>しない</strong> (ファイル)"
 
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-mu-plugins.php:60
+=======
+#: lib/model/import/class-ai1wm-import-mu-plugins.php:56
+>>>>>>> test
 msgid "Done activating mu-plugins."
 msgstr "mu-plugins を有効化しました。"
 
@@ -503,6 +828,7 @@ msgstr "mu-plugins を有効化しています..."
 msgid "Do <strong>not</strong> replace email domain (sql)"
 msgstr "メールアドレスのドメインを置換<strong>しない</strong> (SQL) "
 
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-upload.php:80
 msgid "Unrecognized error %s during upload."
 msgstr "アップロード中の認識できないエラー %s。"
@@ -548,6 +874,53 @@ msgid "At least <strong>one WordPress</strong> site should be presented in the a
 msgstr "アーカイブ内に少なくとも<strong>1サイトの WordPress</strong> が必要です。"
 
 #: lib/model/import/class-ai1wm-import-blogs.php:134
+=======
+#: lib/model/import/class-ai1wm-import-upload.php:104
+msgid "Unrecognized error %s during upload."
+msgstr "アップロード中の認識できないエラー %s。"
+
+#: lib/model/import/class-ai1wm-import-upload.php:98
+msgid "A PHP extension stopped the file upload."
+msgstr "PHP拡張モジュールがファイルのアップロードを停止しました。"
+
+#: lib/model/import/class-ai1wm-import-upload.php:93
+msgid "Failed to write file to disk."
+msgstr "ディスクへのファイルの書き込みに失敗しました。"
+
+#: lib/model/import/class-ai1wm-import-upload.php:88
+msgid "Missing a temporary folder."
+msgstr "一時フォルダーが見つかりません。"
+
+#: lib/model/import/class-ai1wm-import-upload.php:70
+msgid "Unable to upload the file because %s"
+msgstr "ファイルをアップロードできません。理由: %s"
+
+#: lib/model/import/class-ai1wm-import-upload.php:49
+msgid "Missing tmp_name in upload file."
+msgstr "アップロードファイルに tmp_name がありません。"
+
+#: lib/model/import/class-ai1wm-import-upload.php:42
+msgid "Missing error key in upload file."
+msgstr "アップロードファイルにエラーキーがありません。"
+
+#: lib/model/import/class-ai1wm-import-upload.php:35
+msgid "Missing upload file."
+msgstr "アップロードファイルがありません。"
+
+#: lib/model/import/class-ai1wm-import-blogs.php:128
+msgid "Done preparing blogs."
+msgstr "ブログの準備を完了しました。"
+
+#: lib/model/import/class-ai1wm-import-blogs.php:117
+msgid "Unable to import <strong>WordPress Network</strong> into WordPress <strong>Single</strong> site."
+msgstr "<strong>WordPress ネットワーク</strong>を WordPress <strong>シングル</strong>サイトへインポートできません。"
+
+#: lib/model/import/class-ai1wm-import-blogs.php:112
+msgid "At least <strong>one WordPress</strong> site should be presented in the archive."
+msgstr "アーカイブ内に少なくとも<strong>1サイトの WordPress</strong> が必要です。"
+
+#: lib/model/import/class-ai1wm-import-blogs.php:107
+>>>>>>> test
 msgid "The archive should contain <strong>Single WordPress</strong> site! Please revisit your export settings."
 msgstr "アーカイブは<strong>シングルサイトの WordPress</strong> を含む必要があります。エクスポート設定を再設定してください。"
 
@@ -611,8 +984,13 @@ msgstr "プラグインとエクステンションを最新バージョンに更
 msgid "Enter your Purchase ID"
 msgstr "購入 ID (Purchase ID) を入力します。"
 
+<<<<<<< HEAD
 #: lib/controller/class-ai1wm-main-controller.php:1121
 #: lib/view/updater/check.php:31
+=======
+#: lib/view/updater/check.php:31
+#: lib/controller/class-ai1wm-main-controller.php:978
+>>>>>>> test
 msgid "Check for updates"
 msgstr "アップデートを確認"
 
@@ -741,7 +1119,11 @@ msgstr "(クリックして展開)"
 msgid "Advanced options"
 msgstr "高度なオプション"
 
+<<<<<<< HEAD
 #: lib/view/common/share-buttons.php:58
+=======
+#: lib/view/common/share-buttons.php:67
+>>>>>>> test
 msgid "Tweet"
 msgstr "ツイート"
 
@@ -777,8 +1159,13 @@ msgstr "プラグインの利用に手助けが必要"
 msgid "I have ideas to improve this plugin"
 msgstr "プラグインの改善点がある"
 
+<<<<<<< HEAD
 #: lib/view/import/index.php:71 lib/view/export/index.php:75
 #: lib/view/backups/index.php:83
+=======
+#: lib/view/backups/index.php:83 lib/view/import/index.php:71
+#: lib/view/export/index.php:75
+>>>>>>> test
 msgid "Leave Feedback"
 msgstr "フィードバックをお寄せください"
 
@@ -814,14 +1201,22 @@ msgstr "日付"
 msgid "Name"
 msgstr "名前"
 
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-done.php:349
 #: lib/model/import/class-ai1wm-import-done.php:351
 #: lib/model/import/class-ai1wm-import-done.php:353
+=======
+#: lib/model/import/class-ai1wm-import-done.php:213
+>>>>>>> test
 msgid "Your site has been imported successfully!"
 msgstr "サイトをインポートしました。"
 
 #: lib/model/import/class-ai1wm-import-content.php:83
+<<<<<<< HEAD
 #: lib/model/import/class-ai1wm-import-content.php:203
+=======
+#: lib/model/import/class-ai1wm-import-content.php:178
+>>>>>>> test
 msgid "Restoring %d files...<br />%d%% complete"
 msgstr "%dファイルを復元中...<br />%d%% 完了"
 
@@ -829,15 +1224,33 @@ msgstr "%dファイルを復元中...<br />%d%% 完了"
 msgid "Renaming exported file..."
 msgstr "エクスポート済みファイルの名前を変更中..."
 
+<<<<<<< HEAD
 #: lib/model/export/class-ai1wm-export-database.php:149
 msgid "Done exporting database."
 msgstr "データベースをエクスポートしました。"
 
 #: lib/model/import/class-ai1wm-import-enumerate.php:50
+=======
+#: lib/model/export/class-ai1wm-export-database.php:150
+msgid "Done exporting database."
+msgstr "データベースをエクスポートしました。"
+
+#: lib/model/export/class-ai1wm-export-content.php:80
+#: lib/model/export/class-ai1wm-export-content.php:119
+msgid "Archiving %d files...<br />%d%% complete"
+msgstr "%dファイルをアーカイブ中...<br />%d%%完了"
+
+#: lib/model/import/class-ai1wm-import-enumerate.php:50
+#: lib/model/export/class-ai1wm-export-enumerate.php:134
+>>>>>>> test
 msgid "Done retrieving a list of all WordPress files."
 msgstr "すべての WordPress ファイル一覧を取得しました。"
 
 #: lib/model/import/class-ai1wm-import-enumerate.php:35
+<<<<<<< HEAD
+=======
+#: lib/model/export/class-ai1wm-export-enumerate.php:49
+>>>>>>> test
 msgid "Retrieving a list of all WordPress files..."
 msgstr "すべての WordPress ファイル一覧を取得中..."
 
@@ -849,6 +1262,7 @@ msgstr "空のアーカイブを作成しました。"
 msgid "Creating an empty archive..."
 msgstr "空のアーカイブを作成中..."
 
+<<<<<<< HEAD
 #: lib/controller/class-ai1wm-main-controller.php:616
 #: lib/controller/class-ai1wm-main-controller.php:617
 #: lib/view/backups/index.php:37
@@ -862,6 +1276,21 @@ msgstr "インポート"
 
 #: lib/controller/class-ai1wm-main-controller.php:596
 #: lib/controller/class-ai1wm-main-controller.php:597
+=======
+#: lib/view/backups/index.php:37
+#: lib/controller/class-ai1wm-main-controller.php:580
+#: lib/controller/class-ai1wm-main-controller.php:581
+msgid "Backups"
+msgstr "バックアップ"
+
+#: lib/controller/class-ai1wm-main-controller.php:570
+#: lib/controller/class-ai1wm-main-controller.php:571
+msgid "Import"
+msgstr "インポート"
+
+#: lib/controller/class-ai1wm-main-controller.php:560
+#: lib/controller/class-ai1wm-main-controller.php:561
+>>>>>>> test
 msgid "Export"
 msgstr "エクスポート"
 
@@ -869,6 +1298,7 @@ msgstr "エクスポート"
 msgid "Get multisite"
 msgstr "マルチサイトを入手"
 
+<<<<<<< HEAD
 #: lib/controller/class-ai1wm-main-controller.php:866
 #: lib/controller/class-ai1wm-main-controller.php:1049
 #: lib/controller/class-ai1wm-import-controller.php:93
@@ -880,5 +1310,18 @@ msgstr "インポートできません"
 #: lib/controller/class-ai1wm-main-controller.php:1040
 #: lib/controller/class-ai1wm-export-controller.php:85
 #: lib/controller/class-ai1wm-export-controller.php:86
+=======
+#: lib/controller/class-ai1wm-main-controller.php:777
+#: lib/controller/class-ai1wm-main-controller.php:920
+#: lib/controller/class-ai1wm-import-controller.php:87
+#: lib/controller/class-ai1wm-import-controller.php:88
+msgid "Unable to import"
+msgstr "インポートできません"
+
+#: lib/controller/class-ai1wm-export-controller.php:79
+#: lib/controller/class-ai1wm-export-controller.php:80
+#: lib/controller/class-ai1wm-main-controller.php:688
+#: lib/controller/class-ai1wm-main-controller.php:911
+>>>>>>> test
 msgid "Unable to export"
 msgstr "エクスポートできません"
